@@ -3,57 +3,60 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Template.Data.Context;
 
-namespace Template.Data.Migrations
+namespace Template.Migrations
 {
-    [DbContext(typeof(MySQLContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class MySQLContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Template.Domain.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime?>("CreatedDate")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("CreatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Icon")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<int>("Sequence")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("URL")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedData")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UpdatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -98,10 +101,10 @@ namespace Template.Data.Migrations
             modelBuilder.Entity("Template.Domain.Entities.ModuleProfile", b =>
                 {
                     b.Property<int>("ModuleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ProfileId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("ModuleId", "ProfileId");
 
@@ -141,33 +144,34 @@ namespace Template.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime?>("CreatedDate")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("CreatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
                     b.Property<bool>("IsDefault")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedData")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UpdatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -198,45 +202,46 @@ namespace Template.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Code")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedDate")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("CreatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
                     b.Property<bool>("IsAuthorised")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("text");
 
                     b.Property<int>("ProfileId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedData")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UpdatedUser")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -248,7 +253,7 @@ namespace Template.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 1, 19, 17, 45, 58, 538, DateTimeKind.Local).AddTicks(7686),
+                            CreatedDate = new DateTime(2021, 2, 14, 21, 59, 8, 947, DateTimeKind.Local).AddTicks(4467),
                             CreatedUser = 1,
                             Email = "admin@template.com",
                             IsActive = true,
@@ -261,7 +266,7 @@ namespace Template.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2021, 1, 19, 17, 45, 58, 541, DateTimeKind.Local).AddTicks(223),
+                            CreatedDate = new DateTime(2021, 2, 14, 21, 59, 8, 948, DateTimeKind.Local).AddTicks(2930),
                             CreatedUser = 1,
                             Email = "user@template.com",
                             IsActive = true,

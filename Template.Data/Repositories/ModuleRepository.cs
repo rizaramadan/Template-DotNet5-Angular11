@@ -8,7 +8,7 @@ namespace Template.Data.Repositories
 {
     public class ModuleRepository: Repository<Module>, IModuleRepository
 	{
-        public ModuleRepository(MySQLContext context)
+        public ModuleRepository(AppDbContext context)
             : base(context) { }
 
         public IQueryable<Module> GetByProfileId(int profileId)

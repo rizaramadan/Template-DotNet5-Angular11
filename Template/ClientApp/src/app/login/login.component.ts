@@ -14,29 +14,33 @@ import { UserService } from '../_services/user.service';
 })
 export class LoginComponent {
 
-  view: string = "login";
+  view = 'login';
   user: UserLogin = {};
   userChangePassword: UserChangePassword = {};
 
-  constructor(private userService: UserService, private alertService: AlertService, private errorService: ErrorService, private app: AppComponent,
-    private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private alertService: AlertService,
+    private errorService: ErrorService,
+    private app: AppComponent,
+    private router: Router
+  ) { }
 
-  authenticate() {
+  async authenticate() {
     this.app.loading = true;
-    this.userService.authenticate(this.user).subscribe(data => {
-      localStorage.setItem(this.app.storageName, JSON.stringify(data));
-      this.router.navigateByUrl("/dashboard");
+    const data = await this.userService.authenticate(this.user).toPromise().catch( err => {
+      this.errorService.validateError(err);
       this.app.loading = false;
-    }, err => {
-        this.errorService.validateError(err);
-        this.app.loading = false;
     });
+    localStorage.setItem(this.app.storageName, JSON.stringify(data));
+    await this.router.navigateByUrl('/dashboard');
+    this.app.loading = false;
   }
 
-  register() {    
+  register() {
     this.app.loading = true;
     this.userService.register(this.user).subscribe(data => {
-      this.alertService.showSucess("Your account has been created. Please activate by the e-mail we just sent you");      
+      this.alertService.showSucess('Your account has been created. Please activate by the e-mail we just sent you');
       this.app.loading = false;
     }, err => {
       this.errorService.validateError(err);
@@ -47,7 +51,7 @@ export class LoginComponent {
   sendCode(){
     this.app.loading = true;
     this.userService.forgotPassword(this.user.email).subscribe(data => {
-      this.alertService.showSucess("We just sent you an e-mail with a code.");      
+      this.alertService.showSucess('We just sent you an e-mail with a code.');
       this.userChangePassword.email = this.user.email;
       this.view = 'changePassword';
       this.app.loading = false;
@@ -60,7 +64,7 @@ export class LoginComponent {
   changePassword(){
     this.app.loading = true;
     this.userService.changePassword(this.userChangePassword).subscribe(data => {
-      this.alertService.showSucess("Your password has been changes successfully");      
+      this.alertService.showSucess("Your password has been changes successfully");
       this.view = 'login';
       this.app.loading = false;
     }, err => {

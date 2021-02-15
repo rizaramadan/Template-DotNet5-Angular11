@@ -17,42 +17,80 @@ export class NavMenuComponent {
     { name: 'Home', url: '/', icon: 'home', sequence: 1, id: 1},
     { name: 'Login', url: '/login', icon: 'login', sequence: 2, id: 2},
   ];
-  constructor(private moduleService: ModuleService, private router: Router,private errorService: ErrorService, private app: AppComponent) {
-    
+
+  constructor(private moduleService: ModuleService, private router: Router, private errorService: ErrorService, private app: AppComponent) {
     // decide what to do when this event is triggered.
     router.events.subscribe(event => {
       if (event instanceof NavigationStart){
         if (localStorage.getItem(this.app.storageName)) {
           this.getModules();
-        }else{
-          var _privateModule = this._modulesDefault.find(mod => mod.url==event.url);
-          if (!_privateModule)
+        } else {
+          const _privateModule = this._modulesDefault.find(mod => mod.url === event.url);
+          if (!_privateModule) {
             this.router.navigateByUrl('/');
+          }
 
           this._modules = this._modulesDefault;
         }
      }
-      
+
     });
   }
 
   getModules() {
+    const key = 'modules';
+    const fromCache = this.getWithExpiry(key);
+    if (fromCache != null) {
+      this._modules = fromCache;
+      return;
+    }
     this.moduleService.getModules().subscribe(data => {
       this._modules = data;
+      this.setWithExpiry(key, data, 600000);
     }, err => {
-      this.router.navigateByUrl("/");
+      this.router.navigateByUrl('/');
       this.errorService.validateError(err);
       this._modules = this._modulesDefault;
     });
-  }  
+  }
+
+  setWithExpiry(key: string, value: Module[], ttl: number) {
+    const now = new Date();
+
+    // `item` is an object which contains the original value
+    // as well as the time when it's supposed to expire
+    const item = {
+      value: value,
+      expiry: now.getTime() + ttl,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  }
+
+  getWithExpiry(key: string): Module[] {
+    const itemStr = localStorage.getItem(key);
+    // if the item doesn't exist, return null
+    if (!itemStr) {
+      return null;
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    // compare the expiry time of the item with the current time
+    if (now.getTime() > item.expiry) {
+      // If the item is expired, delete the item from storage
+      // and return null
+      localStorage.removeItem(key);
+      return null;
+    }
+    return item.value;
+  }
 
   isPrivate(){
-    return !this._modulesDefault.find(mod => mod.url == window.location.pathname);
+    return !this._modulesDefault.find(mod => mod.url === window.location.pathname);
   }
 
   logout(){
     localStorage.removeItem(this.app.storageName);
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl('/');
   }
 
   collapse() {

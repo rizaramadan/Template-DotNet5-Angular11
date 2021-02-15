@@ -33,13 +33,8 @@ namespace Template
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<MySQLContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 22))
-                , builder =>
-                {
-                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-                }
-                )
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),b => b.MigrationsAssembly("Template"))
             );
 
             services.AddCors(options =>
@@ -119,7 +114,8 @@ namespace Template
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

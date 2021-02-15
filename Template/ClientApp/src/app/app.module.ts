@@ -21,6 +21,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { UsersComponent } from './users/users.component';
 import { AccountComponent } from './account/account.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -43,12 +47,16 @@ import { AccountComponent } from './account/account.component';
       { path: 'users', component: UsersComponent },
       { path: 'accounts', component: AccountComponent },
     ]),
-    Interceptor,    
+    Interceptor,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     NgxLoadingModule.forRoot({}), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [ModuleService, UserService,AlertService, ErrorService, AppComponent, NavMenuComponent ],
+  providers: [ModuleService, UserService, AlertService, ErrorService, AppComponent, NavMenuComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

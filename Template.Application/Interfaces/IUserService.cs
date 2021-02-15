@@ -3,8 +3,8 @@ using Template.Application.ViewModels.Users;
 
 namespace Template.Application.Interfaces
 {
-	public interface IUserService
-	{
+    public interface IUserService
+    {
         bool Post(UserRequestCreateAccountViewModel user, string host);
         UserResponseAuthenticateViewModel Authenticate(UserRequestAuthenticateViewModel user);
         bool ForgotPassword(string email);

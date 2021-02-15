@@ -5,7 +5,7 @@ using Template.Domain.Entities;
 namespace Template.Domain.Interfaces
 {
     public interface IModuleRepository
-	{
-		IQueryable<Module> GetByProfileId(int profileId);
-	}
+    {
+	IQueryable<Module> GetByProfileId(int profileId);
+    }
 }

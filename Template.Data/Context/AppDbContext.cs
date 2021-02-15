@@ -7,9 +7,9 @@ using Template.Domain.Entities;
 
 namespace Template.Data.Context
 {
-    public class MySQLContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public MySQLContext(DbContextOptions<MySQLContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 
         public DbSet<User> Users { get; set; }
@@ -91,7 +91,6 @@ namespace Template.Data.Context
                             break;
                         case nameof(Entity.CreatedDate):
                             property.IsNullable = false;
-                            property.SetColumnType("datetime");
                             property.SetDefaultValueSql("CURRENT_TIMESTAMP");
                             break;
                         case nameof(Entity.IsActive):

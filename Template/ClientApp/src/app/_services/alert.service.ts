@@ -6,7 +6,7 @@ export class AlertService {
 
   constructor(private toastr: ToastrService) { }
 
-  showSucess(message){
+  showSucess(message: string){
     this.toastr.success(message);
   }
 
