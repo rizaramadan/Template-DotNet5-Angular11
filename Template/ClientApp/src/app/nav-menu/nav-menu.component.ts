@@ -33,7 +33,6 @@ export class NavMenuComponent {
           this._modules = this._modulesDefault;
         }
      }
-
     });
   }
 

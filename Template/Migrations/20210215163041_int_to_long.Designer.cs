@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Template.Data.Context;
@@ -9,9 +10,10 @@ using Template.Data.Context;
 namespace Template.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class MySQLContextModelSnapshot : ModelSnapshot
+    [Migration("20210215163041_int_to_long")]
+    partial class int_to_long
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -10,8 +10,8 @@ using Template.CrossCutting.Auth.ViewModels;
 namespace Template.Controllers
 {
     [Route("api/[controller]"), ApiController]
-	public class UsersController : ControllerBase
-	{
+    public class UsersController : ControllerBase
+    {
         private readonly IUserService service;
         private readonly IAuthService authService;
 
@@ -163,7 +163,6 @@ namespace Template.Controllers
                 throw;
             }
         }
-
 
 
         [HttpPut]

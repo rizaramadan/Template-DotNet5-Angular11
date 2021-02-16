@@ -13,12 +13,12 @@ import { ErrorService } from '../_services/error.service';
   templateUrl: './users.component.html'
 })
 export class UsersComponent {
-  
-  view: string = 'list';
+
+  view = 'list';
   _users: User[] = [];
   _userSelected: User = {};
 
-  constructor(private userService: UserService,private app: AppComponent, private errorService: ErrorService) {
+  constructor(private userService: UserService, private app: AppComponent, private errorService: ErrorService) {
     this.getUsers();
   }
 
@@ -30,7 +30,7 @@ export class UsersComponent {
     }, err => {
       this.errorService.validateError(err);
       this.app.loading = false;
-    })
+    });
   }
 
   openDetails(user){
